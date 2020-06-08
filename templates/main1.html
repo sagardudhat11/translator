@@ -1,0 +1,183 @@
+{% load static %}
+<html>
+    <head>
+        <link href="{% static 'css/style.css' %}" rel="stylesheet" type="text/css">
+
+        <meta name='viewport' content='width=device-width, initial-scale=1'>
+        <script>
+
+            function copyClipboard() {
+              var elm = document.getElementById("maindiv");
+              // for Internet Explorer
+            
+              if(document.body.createTextRange) {
+                var range = document.body.createTextRange();
+                range.moveToElementText(elm);
+                range.select();
+                document.execCommand("Copy");
+                alert("traslation text copied.");
+              }
+              else if(window.getSelection) {
+                // other browsers
+            
+                var selection = window.getSelection();
+                var range = document.createRange();
+                range.selectNodeContents(elm);
+                selection.removeAllRanges();
+                selection.addRange(range);
+                document.execCommand("Copy");
+                alert("traslation text copied.");
+              }
+            }
+            </script>
+        <style>
+            #btn1{
+                margin-left: 200;
+                margin-top: 10px;
+                color: #fff !important;
+                text-transform: uppercase;
+                text-decoration: none;
+                background: #60a3bc;
+                padding: 10px;
+                border-radius: 50px;
+                display: inline-block;
+                border: none;
+                transition: all 0.4s ease 0s;
+            }
+            #btn1:hover{
+                background: #18a4e0;
+                box-shadow: 2px 2px 5px grey;
+
+            }
+            .txt{       
+                border-radius: 5px;
+                background-color: lightgreen;
+                font-size: 20px;
+                width: 600px;
+                height: 200px;
+                resize: none;
+                padding: 10px;
+                margin-left: 200px;
+                margin-top: 20px;
+
+            }
+          
+            #maindiv{
+                margin-top:45px;
+                margin-left: 200px;
+                border-radius: 5px;
+                border: 0.8px solid gray;
+                width: 600px;
+                height: 200px;
+                padding: 10px;
+                overflow-y: auto;
+            }
+            
+                 select {
+                -webkit-appearance: none;
+                -moz-appearance: none;
+                -ms-appearance: none;
+                appearance: none;
+                outline: 0;
+                text-transform: uppercase;
+                box-shadow: none;
+                border: 0 !important;
+                background: #2c3e50;
+                background-image: none;
+                }
+                /* Remove IE arrow */
+                select::-ms-expand {
+                display: none;
+                }
+                /* Custom Select */
+                .select {
+                margin-top: 15px;
+                margin-left: 200px;    
+                position: relative;
+                display: flex;
+                width: 200px;
+                height: 2.5em;
+                
+                line-height: 2.7;
+                background: #c0c7ce;
+                overflow: hidden;
+                border-radius: .25em;
+                }
+                select {
+                flex: 1;
+                padding: 0 .5em;
+                color: #fff;
+                cursor: pointer;
+                }
+                /* Arrow */
+                .select::after {
+                content: '\25BC';
+                position: absolute;
+                top: 0;
+                right: 0;
+                padding: 0 1em;
+                background: #34495e;
+                color: white;
+                cursor: pointer;
+                pointer-events: none;
+                -webkit-transition: .25s all ease;
+                -o-transition: .25s all ease;
+                transition: .25s all ease;
+                }
+                /* Transition */
+                .select:hover::after {
+                color: #f39c12;
+                }
+                .btn_lan,.select{
+                    float: left;
+                    margin-right: 10px;
+                }
+                .btn_lan{
+                    margin-top: 17px;
+                    color: #fff !important;
+                text-transform: uppercase;
+                text-decoration: none;
+                background: #f39c12;
+                padding: 10px;
+                border-radius: 5px;
+                display: inline-block;
+                border: none;
+                height: 2.8em;
+                transition: all 0.4s ease 0s;
+                }
+
+        </style>
+    </head>
+    
+    <body>
+        <form action="/main1/" method="post"> {% csrf_token %}
+            
+            <textarea name="text"  class="txt" placeholder="Add your text..." required autofocus></textarea><br>
+          
+                <div class="select">
+                <select name="numbers" id="sort-item" required>
+                    {% if choosen_lan == "" %}
+                    {% for i in lan_list %}
+                           
+                         <option  value="{{ i }}">{{ i }}</option>
+                   
+                    {% endfor %}
+                    {% else %}
+                    <option  value="{{ choosen_lan }}">{{ choosen_lan }}</option>
+                    {% for i in lan_list %}
+                           
+                    <option  value="{{ i }}">{{ i }}</option>
+              
+                     {% endfor %}
+                     {% endif %}
+                </select>
+            </div>
+                <input type="submit" value="Select" class='btn_lan'>
+                
+        </form><br>
+        <div id="maindiv">
+      {{trans}}
+      </div>
+      <button id="btn1" onclick="copyClipboard()">Copy text</button>
+    </body>
+</html>

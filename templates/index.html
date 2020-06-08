@@ -1,0 +1,87 @@
+{% load static %}
+<html>
+
+<head>
+    <link href="{% static 'css/style_index.css' %}" rel="stylesheet" type="text/css">
+
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+    <link href="https://fonts.googleapis.com/css?family=Oleo+Script:400,700" rel="stylesheet">
+   	<link href="https://fonts.googleapis.com/css?family=Teko:400,700" rel="stylesheet">
+   	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  </head>
+<title>Translator</title>
+ <body> 
+<section id="contact">
+			<div class="section-content">
+				<h1 class="section-header"> <span class="content-header wow fadeIn " data-wow-delay="0.2s" data-wow-duration="2s"> Translate</span> your text</h1>
+				<h3>Write and click <b>TRANSLATE</b></h3>
+			</div>
+			<div class="contact-section">
+			<div class="container">
+				<form action="" method="post"> {% csrf_token %}
+					<div class="col-md-6 form-line">
+					    <div class="form-group"> 
+					    <label for ="from"> From  </label>
+			  				
+					    <select class="sel" name="from">
+                            <option  value="english">English</option>
+
+                            {% for i in lan_list %}
+                           
+                            <option  value="{{ i }}">{{ i }}</option>
+                      
+                       {% endfor %}
+					</select> </div>
+			  			<div class="form-group">
+                            {% if text1 == "" %}
+
+                            <textarea  class="form-control" style="height: 130px;" name="text" id="original" placeholder="Enter Your Text"></textarea>
+                            {% else %}   
+                            <textarea  class="form-control" style="height: 130px;" name="text" id="original" placeholder="Enter Your Text">{{ text1 }}</textarea>
+                            {% endif %}
+			  			</div>
+			  		</div>
+			  		<div class="col-md-6">
+			  		     <div class="form-group"> 
+					    <label for ="from"> From  </label>
+			  				
+					    <select  name="numbers">
+                            {% if choosen_lan == "" %}
+                            {% for i in lan_list %}
+                                   
+                                 <option  value="{{ i }}">{{ i }}</option>
+                           
+                            {% endfor %}
+                            {% else %}
+                            <option  value="{{ choosen_lan }}">{{ choosen_lan }}</option>
+                            {% for i in lan_list %}
+                                   
+                            <option  value="{{ i }}">{{ i }}</option>
+                      
+                             {% endfor %}
+                             {% endif %}
+               
+</select> </div>
+			  			<div class="form-group">
+			  			
+			  			 	<textarea  class="form-control" style="height: 130px;" id="translated" placeholder="Translated text will be here">{{ trans }}</textarea>
+			  			</div>
+			  			<div>
+
+			  				<button type="submit" class="btn btn-default submit"><i class="fa fa-globe" aria-hidden="true"></i>   translate</button>
+			  			</div>
+			  			
+					</div>
+				</form>
+				</div></div>
+        </section>
+    </body>        
+</html>        

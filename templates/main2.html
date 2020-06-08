@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script>
+function copyClipboard() {
+  var elm = document.getElementById("divClipboard");
+  // for Internet Explorer
+
+  if(document.body.createTextRange) {
+    var range = document.body.createTextRange();
+    range.moveToElementText(elm);
+    range.select();
+    document.execCommand("Copy");
+    alert("Copied div content to clipboard");
+  }
+  else if(window.getSelection) {
+    // other browsers
+
+    var selection = window.getSelection();
+    var range = document.createRange();
+    range.selectNodeContents(elm);
+    selection.removeAllRanges();
+    selection.addRange(range);
+    document.execCommand("Copy");
+    alert("Copied div content to clipboard");
+  }
+}
+</script>
+</head>
+<body>
+   <div class="code-bg" id="divClipboard">
+      Click on the button to copy the text from the div element. Try to paste the text (e.g. ctrl+v) afterwards in a different window, to see the effect.
+   </div>
+   <button onclick="copyClipboard()">Copy text</button>
+</body>
+</html>
